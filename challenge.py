@@ -367,7 +367,7 @@ def moviesETLProcess(wikiJson: str, kaggleCsv:str, ratingCsv:str):
     try:
         
         # Load movies Data into DB
-        moviesWithRatingsDF.to_sql(name="movies_cha", con=engine, if_exists="replace")
+        moviesWithRatingsDF.to_sql(name="movies", con=engine, if_exists="replace")
         print("   > Movies data successfully loaded into DB.")
     except Exception as e:
         print(f"\nError raised loading data into movies table: {e}\n\nMovies data not loaded or loaded with errors.")
@@ -388,10 +388,10 @@ def moviesETLProcess(wikiJson: str, kaggleCsv:str, ratingCsv:str):
             
             if rowsImported == 0:
                 
-                data.to_sql(name="ratings_cha", con=engine, if_exists="replace")
+                data.to_sql(name="ratings", con=engine, if_exists="replace")
             else:
                 
-                data.to_sql(name="ratings_cha", con=engine, if_exists="append")
+                data.to_sql(name="ratings", con=engine, if_exists="append")
 
             # increment the number of rows imported by the chunksize
             rowsImported += len(data)
